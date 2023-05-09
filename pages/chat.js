@@ -7,7 +7,6 @@ const DynamicReactJson = dynamic(import('react-json-view'), { ssr: false })
 const Chat = () => {
   const [messages, setMessages] = React.useState([])
   const [inputValue, setInputValue] = React.useState(1)
-  const [socketUrl, setSocketUrl] = React.useState(false)
   const [socket, setSocket] = React.useState(false)
   
   function setupSocketEventListeners(socket) {
@@ -22,7 +21,6 @@ const Chat = () => {
 
     socket.on("disconnect", () => {
       console.log("Disconnected from WebSocket server")
-      // socket.disconnect()
     })
 
     function handleMessage(property, message) {
@@ -35,37 +33,37 @@ const Chat = () => {
     socket.on("message", message => handleMessage("message", message))
   }
 
-  const handleSocketConnect = React.useMemo(async () => {
-    
+  const handleSocketConnect = (websocketUrl) => {
+
     if(socket && socket.active) {
+      console.log("in socket && socket.active")
       return
     }
 
     if (socket || socket.disconnected) {
+      console.log("in socket || socket.disconnected")
       socket.removeAllListeners()
       connectSocket()
     }
 
-    if (!socket && !!socketUrl) {
-      const newSocket = getSocket(socketUrl)
+    if (!socket) {
+      const newSocket = getSocket(websocketUrl)
       setupSocketEventListeners(newSocket)
       newSocket.connect()
       setSocket(newSocket)
     }
 
-
     function connectSocket() {
       setupSocketEventListeners(socket)
       socket.connect()
     }
-  })
+  }
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value)
   }
 
-  const handleClick = (e) => {
-    e.preventDefault()
+  const handleClick = () => {
     // Make HTTP POST request to start the chat and obtain WebSocket URL
     fetch("http://localhost:5050/start-chat", {
       method: "POST",
@@ -75,10 +73,8 @@ const Chat = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-
-        setSocketUrl(data.websocketUrl)
-
-        handleSocketConnect()
+        const {websocketUrl} = data
+        handleSocketConnect(websocketUrl)
       })
       .catch((error) => {
         console.error("Error starting chat:", error)
@@ -87,14 +83,13 @@ const Chat = () => {
 
   React.useEffect(() => {
     console.log(messages)
-
   }, [messages])
 
 
   return (
     <div>
       <ul>
-        <MessageComponent {...{messages}}/>
+        <MessagesComponent {...{messages}}/>
       </ul>
       <form style={{ display: "flex", flexDirection: "column" }}>
         <label htmlFor="inputField">Enter number of cycles:</label>
@@ -107,7 +102,7 @@ const Chat = () => {
   )
 }
 
-const MessageComponent = ({messages}) => {
+const MessagesComponent = ({messages}) => {
   return messages.map((message, index) => (
     <li key={message.id ? message.id : `${index}-${new Date().toISOString()}`}>
       <>
@@ -136,6 +131,11 @@ const MessageComponent = ({messages}) => {
 
     </li>
   ))
+}
+
+const ThoughtsMessage = (thoughts) => {
+
+  return ""
 }
 
 export default Chat
