@@ -1,0 +1,19 @@
+{
+  "name": "loopgpt-next",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "eslint-config-next": "13.4.1",
+    "next": "13.4.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-json-view": "^1.21.3",
+    "socket.io-client": "4.6.1"
+  }
+}
