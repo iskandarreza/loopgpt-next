@@ -1,14 +1,16 @@
 import React from "react"
-import { getSocket } from "../src/app/socket"
 import dynamic from "next/dynamic"
+import { getSocket } from "../utils/socket"
+import { Box, Container, Paper } from "@mui/material"
+import { MessagesComponent } from "../components/MessagesComponent";
 
-const DynamicReactJson = dynamic(import('react-json-view'), { ssr: false })
+export const DynamicReactJson = dynamic(import('react-json-view'), { ssr: false })
 
 const Chat = () => {
   const [messages, setMessages] = React.useState([])
   const [inputValue, setInputValue] = React.useState(1)
   const [socket, setSocket] = React.useState(false)
-  
+
   function setupSocketEventListeners(socket) {
     if (!socket) return
     socket.on("connect", () => {
@@ -35,7 +37,7 @@ const Chat = () => {
 
   const handleSocketConnect = (websocketUrl) => {
 
-    if(socket && socket.active) {
+    if (socket && socket.active) {
       console.log("in socket && socket.active")
       return
     }
@@ -73,7 +75,7 @@ const Chat = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const {websocketUrl} = data
+        const { websocketUrl } = data
         handleSocketConnect(websocketUrl)
       })
       .catch((error) => {
@@ -87,10 +89,8 @@ const Chat = () => {
 
 
   return (
-    <div>
-      <ul>
-        <MessagesComponent {...{messages}}/>
-      </ul>
+    <Container>
+      <MessagesComponent {...{ messages }} />
       <form style={{ display: "flex", flexDirection: "column" }}>
         <label htmlFor="inputField">Enter number of cycles:</label>
         <div>
@@ -98,44 +98,20 @@ const Chat = () => {
           <button type="button" onClick={handleClick}>Start</button>
         </div>
       </form>
-    </div>
+    </Container>
   )
 }
 
-const MessagesComponent = ({messages}) => {
-  return messages.map((message, index) => (
-    <li key={message.id ? message.id : `${index}-${new Date().toISOString()}`}>
-      <>
-        {!!message.init_state &&
-          <DynamicReactJson name={"init_state"} src={message.init_state} theme={"harmonic"} collapsed />}
-        {!!message.init_thoughts &&
-          // Object.keys(message.init_thoughts)
-          <DynamicReactJson name={"init_thoughts"} src={message.init_thoughts} theme={"harmonic"} />
-          // .map((key) => [key, message.init_thoughts[key]])
-          // .map((v,i) => v[0] !== "id" ? <p><strong>{`${v[0]}: `}</strong>{`${v[1]}`}</p> : "")
-          // .map((key) => {
-          //   <p key={`${key}-${message.id}`}><strong>{key}: </strong>{message.init_thoughts[key]}</p>
-          // })
-        }
-        {!!message.this_cycle &&
-          <DynamicReactJson name={"this_cycle"} src={message.this_cycle} theme={"harmonic"} collapsed />
-          // <span>{JSON.stringify(message.this_cycle)}</span>
-          // .map(({k,v}, i) => {
-          //   <span key={`${message.id}-${k}-${i}`}><strong>{k[i]}:</strong>{v[i]}</span>
-          // })}
-          // .map((key) => JSON.stringify([key, message.init_thoughts[key]]))
-        }
-        {!!message.message &&
-          <h6>{JSON.stringify(message.message)}</h6>}
-      </>
 
-    </li>
-  ))
-}
 
-const ThoughtsMessage = (thoughts) => {
-
-  return ""
-}
 
 export default Chat
+
+function ThoughtBox(thoughtForm) {
+  return <Box>
+    <Paper>
+      <p></p>
+
+    </Paper>
+  </Box>
+}
