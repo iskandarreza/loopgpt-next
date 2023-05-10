@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   CLOSE_FILE_UPLOAD_DIALOG,
   OPEN_FILE_UPLOAD_DIALOG,
+  UPDATE_AGENT_STATE,
 } from '@/store/types'
 import { UploadFileDialog } from '../components/UploadFileDialog'
 // import ArchiveIcon from '@mui/icons-material/Archive';
@@ -31,7 +32,7 @@ const Chat = () => {
   const [file, setFile] = useState(null)
 
   const dispatch = useDispatch()
-  const state = useSelector((state) => state.uiStates)
+  const state = useSelector((state) => state)
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0])
@@ -139,8 +140,13 @@ const Chat = () => {
       })
       const data = await response.json()
 
-      dispatch({ type: CLOSE_FILE_UPLOAD_DIALOG })
-
+      if (data.success) {
+        dispatch({ type: UPDATE_AGENT_STATE, payload: data.data })
+        dispatch({ type: CLOSE_FILE_UPLOAD_DIALOG })
+      } else {
+        // handle error
+      }
+      
       console.log(data)
     } catch (error) {
       console.log(error)
