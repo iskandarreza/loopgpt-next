@@ -1,22 +1,22 @@
-import React from 'react';
-import { Input } from '@mui/material';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { useDispatch, useSelector } from 'react-redux';
-import { CLOSE_FILE_UPLOAD_DIALOG } from '@/store/types';
+import React from 'react'
+import { Input } from '@mui/material'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import { useDispatch, useSelector } from 'react-redux'
+import { CLOSE_FILE_UPLOAD_DIALOG } from '@/store/types'
 
 export function UploadFileDialog({ handleFileChange, handleFileUpload }) {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.uiStates.fileUploadDialog);
-  const { isOpen } = state;
+  const dispatch = useDispatch()
+  const state = useSelector((state) => state.uiStates.fileUploadDialog)
+  const { isOpen } = state
 
   const handleClose = () => {
-    dispatch({ type: CLOSE_FILE_UPLOAD_DIALOG });
-  };
+    dispatch({ type: CLOSE_FILE_UPLOAD_DIALOG })
+  }
 
   return (
     <Dialog
@@ -45,5 +45,5 @@ export function UploadFileDialog({ handleFileChange, handleFileUpload }) {
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

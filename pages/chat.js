@@ -5,7 +5,6 @@ import { Box, Container, Typography } from '@mui/material'
 import { MessagesComponent } from '../components/MessagesComponent'
 import { sampleMessages } from '@/utils/sample-messages'
 
-
 import { BottomNavigationComponent } from '../components/BottomNavigationComponent'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -14,6 +13,7 @@ import {
   UPDATE_AGENT_STATE,
 } from '@/store/types'
 import { UploadFileDialog } from '../components/UploadFileDialog'
+import { AgentConfigComponent } from '../components/AgentConfigComponent'
 // import ArchiveIcon from '@mui/icons-material/Archive';
 
 export const DynamicReactJson = dynamic(import('react-json-view'), {
@@ -146,7 +146,7 @@ const Chat = () => {
       } else {
         // handle error
       }
-      
+
       console.log(data)
     } catch (error) {
       console.log(error)
@@ -224,22 +224,6 @@ function CycleConfigComponent() {
       </Typography>
       <p>Number of Cycles</p>
       <p>Save to DB</p>
-    </Box>
-  )
-}
-
-function AgentConfigComponent() {
-  return (
-    <Box>
-      <p>Model</p>
-      <p>Agent Name</p>
-      <p>Agent Description</p>
-      <p>Goals</p>
-      <p>Constraints</p>
-      <p>Init Prompt</p>
-      <p>Next Prompt</p>
-      <p>Tools</p>
-      <p>Staged Tools</p>
     </Box>
   )
 }

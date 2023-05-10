@@ -4,5 +4,5 @@ import agentReducers from './agentReducers'
 
 export default combineReducers({
   uiStates: uiReducer,
-  agentStates: agentReducers
+  agentStates: agentReducers,
 })

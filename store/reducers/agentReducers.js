@@ -1,4 +1,4 @@
-import { UPDATE_AGENT_STATE } from "../types"
+import { UPDATE_AGENT_STATE } from '../types'
 
 const initialState = {
   agentState: null,
@@ -9,10 +9,10 @@ export default function (state = initialState, action) {
     case UPDATE_AGENT_STATE:
       return {
         ...state,
-        agentState: action.payload
+        agentState: action.payload,
       }
 
-      default:
+    default:
       return state
   }
 }
