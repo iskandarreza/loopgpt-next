@@ -3,13 +3,14 @@ import dynamic from 'next/dynamic'
 import { getSocket } from '../utils/socket'
 import { Box, Container, Paper } from '@mui/material'
 import { MessagesComponent } from '../components/MessagesComponent'
+import { sampleMessages } from '@/utils/sample-messages'
 
 export const DynamicReactJson = dynamic(import('react-json-view'), {
   ssr: false,
 })
 
 const Chat = () => {
-  const [messages, setMessages] = React.useState([])
+  const [messages, setMessages] = React.useState(sampleMessages)
   const [inputValue, setInputValue] = React.useState(1)
   const [socket, setSocket] = React.useState(false)
 
@@ -91,35 +92,34 @@ const Chat = () => {
   }, [messages])
 
   return (
-    <Container>
-      <MessagesComponent {...{ messages }} />
-      <form style={{ display: 'flex', flexDirection: 'column' }}>
-        <label htmlFor="inputField">Enter number of cycles:</label>
-        <div>
-          <input
-            id="inputField"
-            type="number"
-            value={inputValue}
-            placeholder="1"
-            onChange={handleInputChange}
-          />
-          <button type="button" onClick={handleClick}>
-            Start
-          </button>
-        </div>
-      </form>
-    </Container>
+    <Box>
+      <Container sx={{ height: '90vh', overflowY: 'scroll' }}>
+        <MessagesComponent {...{ messages }} />
+      </Container>
+      <Container>
+        <Paper
+          elevation={3}
+          sx={{ border: 'grey.500 solid 1px', width: '100%', height: '5vh' }}
+        >
+          <form style={{ display: 'flex', flexDirection: 'column' }}>
+            <label htmlFor="inputField">Enter number of cycles:</label>
+            <div>
+              <input
+                id="inputField"
+                type="number"
+                value={inputValue}
+                placeholder="1"
+                onChange={handleInputChange}
+              />
+              <button type="button" onClick={handleClick}>
+                Start
+              </button>
+            </div>
+          </form>
+        </Paper>
+      </Container>
+    </Box>
   )
 }
 
 export default Chat
-
-function ThoughtBox(thoughtForm) {
-  return (
-    <Box>
-      <Paper>
-        <p></p>
-      </Paper>
-    </Box>
-  )
-}

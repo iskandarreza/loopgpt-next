@@ -1,10 +1,12 @@
 import React from 'react'
-import { Alert } from '@mui/material'
+import { Box, ListItemIcon, ListItemText } from '@mui/material'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import { IconListLine } from './shared/IconListLine'
 
 export function SystemMessageComponent(message) {
   return (
-    <>
-      <Alert severity="info">{message.message.content}</Alert>
-    </>
+    <IconListLine icon={<NotificationsIcon />}>
+      {message.message.content}
+    </IconListLine>
   )
 }
