@@ -1,15 +1,30 @@
-import { UPDATE_AGENT_STATE } from '../types'
+import { RESTORE_AGENT_STATE, SAVE_AGENT_STATE } from '../types'
 
 const initialState = {
-  agentState: null,
+  agentState: {
+    config: null,
+    state_history: [],
+  },
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case UPDATE_AGENT_STATE:
+    case SAVE_AGENT_STATE:
       return {
         ...state,
-        agentState: action.payload,
+        agentState: {
+          ...state.agentState,
+          state_history: [...state.agentState.state_history, action.payload],
+        },
+      }
+
+    case RESTORE_AGENT_STATE:
+      return {
+        ...state,
+        agentState: {
+          ...state.agentState,
+          config: action.payload,
+        },
       }
 
     default:

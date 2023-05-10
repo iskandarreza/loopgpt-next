@@ -6,8 +6,10 @@ import { InitStateComponent } from './InitStateComponent'
 import { InitThoughtsComponent } from './InitThoughtsComponent'
 import { CycleReportComponent } from './CycleReportComponent'
 import { SystemMessageComponent } from './SystemMessageComponent'
+import { useSelector } from 'react-redux'
 
-export const MessagesComponent = ({ messages }) => {
+export const MessagesComponent = () => {
+  const messages = useSelector((state) => state.uiStates.messages)
   return messages.map((message, index) => (
     <Paper
       sx={{ margin: '16px auto' }}

@@ -1,6 +1,12 @@
-import { OPEN_FILE_UPLOAD_DIALOG, CLOSE_FILE_UPLOAD_DIALOG } from '../types'
+import {
+  OPEN_FILE_UPLOAD_DIALOG,
+  CLOSE_FILE_UPLOAD_DIALOG,
+  APPEND_WEBSOCKET_MESSAGES,
+  CLEAR_WEBSOCKET_MESSAGES,
+} from '../types'
 
 const initialState = {
+  messages: [],
   fileUploadDialog: {
     isOpen: false,
   },
@@ -15,6 +21,7 @@ export default function (state = initialState, action) {
           isOpen: true,
         },
       }
+
     case CLOSE_FILE_UPLOAD_DIALOG:
       return {
         ...state,
@@ -22,6 +29,19 @@ export default function (state = initialState, action) {
           isOpen: false,
         },
       }
+
+    case APPEND_WEBSOCKET_MESSAGES:
+      return {
+        ...state,
+        messages: [...state.messages, action.payload],
+      }
+
+    case CLEAR_WEBSOCKET_MESSAGES:
+      return {
+        ...state,
+        messages: [],
+      }
+
     default:
       return state
   }
