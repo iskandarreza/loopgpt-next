@@ -24,6 +24,7 @@
     "socket.io-client": "4.6.1"
   },
   "devDependencies": {
+    "dotenv": "^16.0.3",
     "eslint": "^8.40.0",
     "prettier": "^2.8.8"
   }

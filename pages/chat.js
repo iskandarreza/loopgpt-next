@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { getSocket } from '../utils/socket'
 import { Box, Container, Paper } from '@mui/material'
@@ -10,9 +10,10 @@ export const DynamicReactJson = dynamic(import('react-json-view'), {
 })
 
 const Chat = () => {
-  const [messages, setMessages] = React.useState(sampleMessages)
-  const [inputValue, setInputValue] = React.useState(1)
-  const [socket, setSocket] = React.useState(false)
+  const [messages, setMessages] = useState(sampleMessages)
+  const [inputValue, setInputValue] = useState(1)
+  const [socket, setSocket] = useState(false)
+  const [isStarted, setIsStarted] = useState(false)
 
   function setupSocketEventListeners(socket) {
     if (!socket) return
@@ -70,8 +71,13 @@ const Chat = () => {
   }
 
   const handleClick = () => {
+    if (!isStarted) {
+      setMessages([])
+      setIsStarted(true)
+    }
+
     // Make HTTP POST request to start the chat and obtain WebSocket URL
-    fetch('http://localhost:5050/start-chat', {
+    fetch(process.env.NEXT_PUBLIC_INIT_CHAT_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -87,8 +93,8 @@ const Chat = () => {
       })
   }
 
-  React.useEffect(() => {
-    console.log(messages)
+  useEffect(() => {
+    console.log({messages})
   }, [messages])
 
   return (

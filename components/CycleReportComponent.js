@@ -50,7 +50,6 @@ const CycleProgress = ({ data }) => {
 
 const CycleToolReport = ({ data }) => {
   const { staging_tool, command, tool_results, next_command } = data
-  console.log(data)
 
   return (
     <>
