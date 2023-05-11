@@ -5,10 +5,8 @@ import {
 } from '../types'
 
 const initialState = {
-  socketStates: {
-    socket: null,
-    isConnected: false,
-  },
+  socket: null,
+  isConnected: false,
 }
 
 export default function (state = initialState, action) {
@@ -16,25 +14,19 @@ export default function (state = initialState, action) {
     case SET_WEBSOCKET:
       return {
         ...state,
-        socketStates: {
-          socket: action.payload,
-        },
+        socket: action.payload,
       }
 
     case SET_WEBSOCKET_CONNECTED:
       return {
         ...state,
-        socketStates: {
-          isConnected: true,
-        },
+        isConnected: true,
       }
 
     case SET_WEBSOCKET_DISCONNECTED:
       return {
         ...state,
-        socketStates: {
-          isConnected: false,
-        },
+        isConnected: false,
       }
 
     default:
