@@ -44,8 +44,11 @@ const Chat = () => {
   useEffect(() => {
     if (!isStarted) {
       if (messages.length === 0) {
-        sampleMessages.forEach((msg) => {
-          dispatch({ type: APPEND_WEBSOCKET_MESSAGES, payload: msg })
+        sampleMessages.forEach((msg, index) => {
+          // simulate delay
+          setTimeout(() => {
+            dispatch({ type: APPEND_WEBSOCKET_MESSAGES, payload: msg })
+          }, 1200*index)
         })
       }
     }

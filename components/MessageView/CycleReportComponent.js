@@ -46,7 +46,7 @@ export function CycleReportComponent(message) {
       {!!message.this_cycle.next_thoughts && (
         <>
           <IconListLine icon={<NextPlanIcon />}>Next thoughts: </IconListLine>
-          <RowPanelContainer>
+          <RowPanelContainer panelCount={'5'}>
             <ThoughtsMessage thoughts={message.this_cycle.next_thoughts} />
           </RowPanelContainer>
         </>
