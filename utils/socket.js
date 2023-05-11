@@ -19,7 +19,7 @@ export const getSocket = (connection) => {
     store.dispatch({ type: SET_WEBSOCKET, payload: newSocket })
     return newSocket
   } else {
-    if (isConnected){
+    if (isConnected) {
       console.log(state.socket)
     } else {
       socket.removeAllListeners()

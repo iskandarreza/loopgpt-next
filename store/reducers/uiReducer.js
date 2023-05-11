@@ -32,7 +32,6 @@ export default function (state = initialState, action) {
         },
       }
 
-    
     case SET_FIRST_START:
       return {
         ...state,
@@ -50,7 +49,6 @@ export default function (state = initialState, action) {
         ...state,
         messages: [...state.messages, action.payload],
       }
-
 
     default:
       return state

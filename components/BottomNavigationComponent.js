@@ -4,13 +4,17 @@ import StartIcon from '@mui/icons-material/Start'
 import SaveAltIcon from '@mui/icons-material/SaveAlt'
 import RestoreIcon from '@mui/icons-material/Restore'
 import { useDispatch, useSelector } from 'react-redux'
-import { CLEAR_WEBSOCKET_MESSAGES, OPEN_FILE_UPLOAD_DIALOG, SET_FIRST_START } from '@/store/types'
+import {
+  CLEAR_WEBSOCKET_MESSAGES,
+  OPEN_FILE_UPLOAD_DIALOG,
+  SET_FIRST_START,
+} from '@/store/types'
 import { getSocket } from '@/utils/socket'
 
 export function BottomNavigationComponent() {
   const dispatch = useDispatch()
   const state = useSelector((state) => state)
-  const [value, setValue] = useState()  
+  const [value, setValue] = useState()
 
   const handleSocketConnect = (websocketUrl) => {
     getSocket(websocketUrl)
@@ -18,7 +22,7 @@ export function BottomNavigationComponent() {
 
   const handleStartClick = () => {
     console.log('fetch starting...')
-  
+
     // Make HTTP POST request to start the chat and obtain WebSocket URL
     fetch(process.env.NEXT_PUBLIC_INIT_CHAT_URL, {
       method: 'POST',
