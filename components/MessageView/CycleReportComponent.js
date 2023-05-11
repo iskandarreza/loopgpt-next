@@ -11,7 +11,7 @@ import NextPlanIcon from '@mui/icons-material/NextPlan'
 
 export function CycleReportComponent(message) {
   // const {} = message
-  // const cycleReport 
+  // const cycleReport
   return (
     <CycleStageContainer>
       <CycleNumberComponent cycleNumber={message.this_cycle.cycle} />
@@ -40,7 +40,6 @@ export function CycleReportComponent(message) {
               </CardContent>
             </Card>
           </RowPanelContainer>
-
         </>
       )}
       {!!message.this_cycle.next_thoughts && (

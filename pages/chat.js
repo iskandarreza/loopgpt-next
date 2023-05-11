@@ -48,7 +48,7 @@ const Chat = () => {
           // simulate delay
           setTimeout(() => {
             dispatch({ type: APPEND_WEBSOCKET_MESSAGES, payload: msg })
-          }, 1200*index)
+          }, 1200 * index)
         })
       }
     }
@@ -57,7 +57,12 @@ const Chat = () => {
   return (
     <Box>
       <Box
-        sx={{ width: '99vw', display: 'grid', gridTemplateColumns: '60vw 3fr', borderBottom: '2px grey solid' }}
+        sx={{
+          width: '99vw',
+          display: 'grid',
+          gridTemplateColumns: '60vw 3fr',
+          borderBottom: '2px grey solid',
+        }}
       >
         <Container>
           <Typography variant="h4" component="h">
@@ -84,7 +89,7 @@ const Chat = () => {
             <MessagesComponent />
           </Container>
         </Box>
-        <Container sx={{ overflowY: 'scroll',  height: contentAreaHeight }}>
+        <Container sx={{ overflowY: 'scroll', height: contentAreaHeight }}>
           <AgentConfigComponent />
           <CycleOverviewComponent />
         </Container>

@@ -33,17 +33,34 @@ export const getSocket = (connection) => {
 export function setupSocketEventListeners(socket) {
   if (!socket) return
 
-  const config = store.getState((state) => state.agentState.config)
-  const { name, goals, constraints } = config
+  // const config = store.getState((state) => state.agentState.config)
+  const state = store.getState()
+
+  const { agentState } = state
+  const { config } = agentState
+  const { model, name, description, goals, constraints } = config
+  console.log({ config })
 
   socket.on('connect', () => {
     store.dispatch({ type: SET_WEBSOCKET_CONNECTED })
+
+    // if (!config) {
+    //   socket.emit('start', {
+    //     // name: name ? name : '3148-Graceful-Sprint',
+    //     max_cycles: 1,
+    //     // goals: !!goals && goals,
+    //     // constraints: !!constraints && constraints,
+    //   })
+    // } else {
     socket.emit('start', {
-      name: name ? name : '3148-Graceful-Sprint',
       max_cycles: 2,
-      // goals: !!goals && goals,
-      constraints: !!constraints && constraints,
+      config: JSON.stringify(config),
+      name,
+      description,
+      goals,
+      constraints,
     })
+    // }
   })
 
   socket.on('disconnect', () => {
@@ -60,6 +77,13 @@ export function setupSocketEventListeners(socket) {
   socket.on('init_state', (message) => {
     // handleMessage('init_state', message)
     store.dispatch({ type: SET_AGENT_INIT_STATE, payload: message })
+    console.log('init_state', message)
+  })
+  socket.on('init_resp', (message) => {
+    // handleMessage('init_resp', message)
+    console.log('init_resp', message)
+    const { history } = message
+    history?.map(({ role, content }) => console.log(`${role}: ${content}`))
   })
   socket.on('init_thoughts', (message) => {
     handleMessage('init_thoughts', message)
@@ -68,9 +92,20 @@ export function setupSocketEventListeners(socket) {
   socket.on('this_cycle', (message) => {
     handleMessage('this_cycle', message)
     store.dispatch({ type: UPDATE_AGENT_CYCLE_STATE, payload: message })
+
+    const { history } = message
+    history?.map(({ role, content }) => console.log(`${role}: ${content}`))
   })
   socket.on('message', (message) => handleMessage('message', message))
   socket.on('current_state', (message) => {
     store.dispatch({ type: SAVE_AGENT_STATE, payload: message })
+    console.log('current_state', message)
+  })
+
+  socket.on('agent_state_this_cycle', (message) => {
+    // store.dispatch({ type: SAVE_AGENT_STATE, payload: message })
+    console.log('agent_state_this_cycle', message)
+    const { history } = message
+    history?.map(({ role, content }) => console.log(`${role}: ${content}`))
   })
 }

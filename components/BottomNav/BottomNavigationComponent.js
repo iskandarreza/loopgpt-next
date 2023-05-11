@@ -25,7 +25,6 @@ export function BottomNavigationComponent() {
   }
 
   const handleStartClick = () => {
-
     // Make HTTP POST request to start the chat and obtain WebSocket URL
     fetch(process.env.NEXT_PUBLIC_INIT_CHAT_URL, {
       method: 'POST',
@@ -77,7 +76,6 @@ export function BottomNavigationComponent() {
           }
         }}
       >
-
         <BottomNavigationAction
           value="start"
           label="Start"
@@ -99,7 +97,6 @@ export function BottomNavigationComponent() {
           label="Configure"
           icon={<CreateIcon />}
         />
-
       </BottomNavigation>
     </Paper>
   )

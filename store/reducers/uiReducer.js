@@ -16,7 +16,9 @@ const initialState = {
   },
   agentConfigDrawer: {
     isOpen: false,
-  }
+    config: {},
+    settings: {},
+  },
 }
 
 export default function (state = initialState, action) {

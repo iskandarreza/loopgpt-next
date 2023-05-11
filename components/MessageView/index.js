@@ -11,9 +11,8 @@ import { useSelector } from 'react-redux'
 export const MessagesComponent = () => {
   const messages = useSelector((state) => state.uiStates.messages)
   return (
-
     <ScrollableFeed>
-      {messages.map((message, index) =>
+      {messages.map((message, index) => (
         <Paper
           sx={{ margin: '16px auto' }}
           key={message.id ? message.id : `${index}-${new Date().toISOString()}`}
@@ -25,7 +24,7 @@ export const MessagesComponent = () => {
             {!!message.message && SystemMessageComponent(message)}
           </ListItem>
         </Paper>
-      )}
+      ))}
     </ScrollableFeed>
   )
 }
