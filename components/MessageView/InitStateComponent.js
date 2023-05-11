@@ -1,5 +1,4 @@
 import React from 'react'
-import { Box, ListItemIcon, ListItemText } from '@mui/material'
 import AddTaskIcon from '@mui/icons-material/AddTask'
 import SettingsIcon from '@mui/icons-material/Settings'
 import { DynamicReactJson } from '@/pages/chat'

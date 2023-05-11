@@ -2,7 +2,7 @@ import React from 'react'
 import { CycleNumberComponent } from './shared/CycleNumberComponent'
 import { ThoughtsMessage } from './shared/ThoughtsMessageComponent'
 import { CycleStageContainer } from './shared/CycleStageContainer'
-import { FivePanelContainer } from './shared/FivePanelContainer'
+import { RowPanelContainer } from './shared/RowPanelContainer'
 import RouteIcon from '@mui/icons-material/Route'
 import { IconListLine } from './shared/IconListLine'
 import { DynamicReactJson } from '@/pages/chat'
@@ -20,9 +20,9 @@ export function InitThoughtsComponent(message) {
           collapsed
         />
       </IconListLine>
-      <FivePanelContainer>
+      <RowPanelContainer>
         <ThoughtsMessage thoughts={message.init_thoughts} />
-      </FivePanelContainer>
+      </RowPanelContainer>
     </CycleStageContainer>
   )
 }

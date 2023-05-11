@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material'
 import StartIcon from '@mui/icons-material/Start'
-import SaveAltIcon from '@mui/icons-material/SaveAlt'
 import RestoreIcon from '@mui/icons-material/Restore'
+// import SaveAltIcon from '@mui/icons-material/SaveAlt'
+// import ArchiveIcon from '@mui/icons-material/Archive'
+import CreateIcon from '@mui/icons-material/Create'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   CLEAR_WEBSOCKET_MESSAGES,
+  HIDE_AGENT_CONFIG_DRAWER,
   OPEN_FILE_UPLOAD_DIALOG,
   SET_FIRST_START,
+  SHOW_AGENT_CONFIG_DRAWER,
 } from '@/store/types'
 import { getSocket } from '@/utils/socket'
 
@@ -21,7 +25,6 @@ export function BottomNavigationComponent() {
   }
 
   const handleStartClick = () => {
-    console.log('fetch starting...')
 
     // Make HTTP POST request to start the chat and obtain WebSocket URL
     fetch(process.env.NEXT_PUBLIC_INIT_CHAT_URL, {
@@ -32,7 +35,6 @@ export function BottomNavigationComponent() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('fetch complete, data:', data)
         const { websocketUrl } = data
         handleSocketConnect(websocketUrl)
       })
@@ -64,8 +66,18 @@ export function BottomNavigationComponent() {
           if (newValue === 'save') {
             dispatch({ type: OPEN_FILE_UPLOAD_DIALOG })
           }
+          if (newValue === 'configure') {
+            const isDrawerOpen = state.uiStates.agentConfigDrawer.isOpen
+            if (!isDrawerOpen) {
+              dispatch({ type: SHOW_AGENT_CONFIG_DRAWER })
+            } else {
+              dispatch({ type: HIDE_AGENT_CONFIG_DRAWER })
+              setValue(0)
+            }
+          }
         }}
       >
+
         <BottomNavigationAction
           value="start"
           label="Start"
@@ -76,12 +88,18 @@ export function BottomNavigationComponent() {
           label="Restore"
           icon={<RestoreIcon />}
         />
-        <BottomNavigationAction
+        {/* <BottomNavigationAction
           value="save"
           label="Save"
           icon={<SaveAltIcon />}
-        />
+        /> */}
         {/* <BottomNavigationAction value="archive" label="Archive" icon={<ArchiveIcon />} /> */}
+        <BottomNavigationAction
+          value="configure"
+          label="Configure"
+          icon={<CreateIcon />}
+        />
+
       </BottomNavigation>
     </Paper>
   )

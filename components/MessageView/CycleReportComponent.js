@@ -4,12 +4,14 @@ import { DynamicReactJson } from '@/pages/chat'
 import { CycleNumberComponent } from './shared/CycleNumberComponent'
 import { CycleStageContainer } from './shared/CycleStageContainer'
 import { Card, CardContent, CardHeader } from '@mui/material'
-import { FivePanelContainer } from './shared/FivePanelContainer'
+import { RowPanelContainer } from './shared/RowPanelContainer'
 import { ThoughtsMessage } from './shared/ThoughtsMessageComponent'
 import { IconListLine } from './shared/IconListLine'
 import NextPlanIcon from '@mui/icons-material/NextPlan'
 
 export function CycleReportComponent(message) {
+  // const {} = message
+  // const cycleReport 
   return (
     <CycleStageContainer>
       <CycleNumberComponent cycleNumber={message.this_cycle.cycle} />
@@ -24,16 +26,16 @@ export function CycleReportComponent(message) {
       </IconListLine>
 
       {!!message.this_cycle.cycle_progress && (
-        <FivePanelContainer>
+        <RowPanelContainer panelCount={'1'}>
           <CycleToolReport data={message.this_cycle} />
-        </FivePanelContainer>
+        </RowPanelContainer>
       )}
       {!!message.this_cycle.next_thoughts && (
         <>
           <IconListLine icon={<NextPlanIcon />}>Next thoughts: </IconListLine>
-          <FivePanelContainer>
+          <RowPanelContainer>
             <ThoughtsMessage thoughts={message.this_cycle.next_thoughts} />
-          </FivePanelContainer>
+          </RowPanelContainer>
         </>
       )}
     </CycleStageContainer>
@@ -59,7 +61,7 @@ const CycleToolReport = ({ data }) => {
           <CycleProgress {...{ data }} />
         </CardContent>
       </Card>
-      <Card>
+      {/* <Card>
         <CardHeader title={'Staging Tool'} />
         <CardContent>
           <pre style={{ whiteSpace: 'normal' }}>{staging_tool}</pre>
@@ -72,7 +74,7 @@ const CycleToolReport = ({ data }) => {
             {JSON.stringify(command, null, 4)}
           </pre>
         </CardContent>
-      </Card>
+      </Card> */}
       <Card>
         <CardHeader title={'Tool Results'} />
         <CardContent>

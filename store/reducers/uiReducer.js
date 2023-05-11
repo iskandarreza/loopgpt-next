@@ -4,6 +4,8 @@ import {
   APPEND_WEBSOCKET_MESSAGES,
   CLEAR_WEBSOCKET_MESSAGES,
   SET_FIRST_START,
+  SHOW_AGENT_CONFIG_DRAWER,
+  HIDE_AGENT_CONFIG_DRAWER,
 } from '../types'
 
 const initialState = {
@@ -12,6 +14,9 @@ const initialState = {
   fileUploadDialog: {
     isOpen: false,
   },
+  agentConfigDrawer: {
+    isOpen: false,
+  }
 }
 
 export default function (state = initialState, action) {
@@ -28,6 +33,22 @@ export default function (state = initialState, action) {
       return {
         ...state,
         fileUploadDialog: {
+          isOpen: false,
+        },
+      }
+
+    case SHOW_AGENT_CONFIG_DRAWER:
+      return {
+        ...state,
+        agentConfigDrawer: {
+          isOpen: true,
+        },
+      }
+
+    case HIDE_AGENT_CONFIG_DRAWER:
+      return {
+        ...state,
+        agentConfigDrawer: {
           isOpen: false,
         },
       }

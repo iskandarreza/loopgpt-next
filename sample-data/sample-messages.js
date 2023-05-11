@@ -1,69 +1,69 @@
 export const sampleMessages = [
-  {
-    init_state: {
-      class: 'Agent',
-      type: 'agent',
-      name: '3148-Graceful-Sprint',
-      description: 'A personal assistant that responds exclusively in JSON',
-      goals:
-        'Run the list_files command and then the list_agents command, then complete the task',
-      constraints: [],
-      model: {
-        class: 'OpenAIModel',
-        type: 'model',
-        model: 'gpt-3.5-turbo',
-        api_key: null,
-      },
-      temperature: 0.8,
-      tools: [
-        {
-          class: 'GoogleSearch',
-          type: 'tool',
-        },
-        {
-          class: 'Browser',
-          type: 'tool',
-          browser_type: 'chrome',
-        },
-        {
-          class: 'ListAgents',
-          type: 'tool',
-        },
-        {
-          class: 'MessageAgent',
-          type: 'tool',
-        },
-        {
-          class: 'CreateAgent',
-          type: 'tool',
-        },
-        {
-          class: 'DeleteAgent',
-          type: 'tool',
-        },
-      ],
-      progress: [],
-      plan: [],
-      sub_agents: {},
-      history: [],
-      memory: {
-        class: 'LocalMemory',
-        type: 'memory',
-        docs: [],
-        embs: null,
-        embedding_provider: {
-          class: 'OpenAIEmbeddingProvider',
-          type: 'embedding_provider',
-          model: 'text-embedding-ada-002',
-        },
-      },
-      staging_tool: null,
-      staging_response: null,
-      tool_response: null,
-      id: 'e1fb9cf5',
-      cycle: 1,
-    },
-  },
+  // {
+  //   init_state: {
+  //     class: 'Agent',
+  //     type: 'agent',
+  //     name: '3148-Graceful-Sprint',
+  //     description: 'A personal assistant that responds exclusively in JSON',
+  //     goals:
+  //       'Run the list_files command and then the list_agents command, then complete the task',
+  //     constraints: [],
+  //     model: {
+  //       class: 'OpenAIModel',
+  //       type: 'model',
+  //       model: 'gpt-3.5-turbo',
+  //       api_key: null,
+  //     },
+  //     temperature: 0.8,
+  //     tools: [
+  //       {
+  //         class: 'GoogleSearch',
+  //         type: 'tool',
+  //       },
+  //       {
+  //         class: 'Browser',
+  //         type: 'tool',
+  //         browser_type: 'chrome',
+  //       },
+  //       {
+  //         class: 'ListAgents',
+  //         type: 'tool',
+  //       },
+  //       {
+  //         class: 'MessageAgent',
+  //         type: 'tool',
+  //       },
+  //       {
+  //         class: 'CreateAgent',
+  //         type: 'tool',
+  //       },
+  //       {
+  //         class: 'DeleteAgent',
+  //         type: 'tool',
+  //       },
+  //     ],
+  //     progress: [],
+  //     plan: [],
+  //     sub_agents: {},
+  //     history: [],
+  //     memory: {
+  //       class: 'LocalMemory',
+  //       type: 'memory',
+  //       docs: [],
+  //       embs: null,
+  //       embedding_provider: {
+  //         class: 'OpenAIEmbeddingProvider',
+  //         type: 'embedding_provider',
+  //         model: 'text-embedding-ada-002',
+  //       },
+  //     },
+  //     staging_tool: null,
+  //     staging_response: null,
+  //     tool_response: null,
+  //     id: 'e1fb9cf5',
+  //     cycle: 1,
+  //   },
+  // },
   {
     init_thoughts: {
       text: "I suggest running the 'list_agents' command to see the available agents and their tasks.",

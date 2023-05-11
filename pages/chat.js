@@ -6,55 +6,47 @@ import { useDispatch, useSelector } from 'react-redux'
 import { APPEND_WEBSOCKET_MESSAGES } from '@/store/types'
 import { sampleMessages } from '@/sample-data/sample-messages'
 
-import { BottomNavigationComponent } from '../components/BottomNavigationComponent'
-import { MessagesComponent } from '../components/MessagesComponent'
+import { BottomNavigationComponent } from '../components/BottomNav/BottomNavigationComponent'
+import { MessagesComponent } from '../components/MessageView'
 
-import { UploadFileDialog } from '../components/UploadFileDialog'
-import { AgentConfigComponent } from '../components/AgentConfigComponent'
-import { AgentConfigDrawer } from '../components/AgentConfigDrawer'
-import { CycleOverviewComponent } from '@/components/CycleOverviewComponent'
-// import ArchiveIcon from '@mui/icons-material/Archive';
+import { UploadFileDialog } from '../components/BottomNav/UploadFileDialog'
+import { AgentConfigComponent } from '../components/AgentConfig/AgentConfigComponent'
+import { AgentConfigDrawer } from '../components/AgentConfig/AgentConfigDrawer'
+import { CycleOverviewComponent } from '@/components/AgentConfig/CycleOverviewComponent'
 
 export const DynamicReactJson = dynamic(import('react-json-view'), {
   ssr: false,
 })
 
+const contentAreaHeight = 'calc(90vh  - 100px)'
+
 const Chat = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [inputValue, setInputValue] = useState(1)
-  const [bottomNavValue, setBottomNavValue] = useState(0)
   const [goals, setGoals] = useState(false)
   const [constraints, setConstraints] = useState(false)
 
   const dispatch = useDispatch()
   const isStarted = useSelector((state) => state.uiStates.isStarted)
-  const agentConfig = useSelector((state) => state.agentState.config)
   const messages = useSelector((state) => state.uiStates.messages)
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value)
   }
 
-  const handleDrawerOpen = () => {
-    setIsDrawerOpen(true)
-  }
-
-  const handleDrawerClose = () => {
-    setIsDrawerOpen(false)
-  }
-
-  useEffect(() => {
-    console.log({ agentConfig })
-  }, [agentConfig])
+  // trace redux states
+  // const state = useSelector((state) => state)
+  // useEffect(() => {
+  //   console.log({ state })
+  // }, [state])
 
   // load sample messages so we can view page elements.
   // will be cleared on first run and replaced by incoming messages
   useEffect(() => {
     if (!isStarted) {
       if (messages.length === 0) {
-        sampleMessages.forEach((msg) =>
+        sampleMessages.forEach((msg) => {
           dispatch({ type: APPEND_WEBSOCKET_MESSAGES, payload: msg })
-        )
+        })
       }
     }
   }, [isStarted, messages])
@@ -62,7 +54,7 @@ const Chat = () => {
   return (
     <Box>
       <Box
-        sx={{ width: '100vw', display: 'grid', gridTemplateColumns: '3fr 1fr' }}
+        sx={{ width: '99vw', display: 'grid', gridTemplateColumns: '3fr 1fr', borderBottom: '2px grey solid' }}
       >
         <Container>
           <Typography variant="h4" component="h">
@@ -82,23 +74,21 @@ const Chat = () => {
       </Box>
 
       <Box
-        sx={{ width: '100vw', display: 'grid', gridTemplateColumns: '3fr 1fr' }}
+        sx={{ width: '98vw', display: 'grid', gridTemplateColumns: '3fr 1fr' }}
       >
         <Box>
-          <Container
-            sx={{ overflowY: 'scroll', height: 'calc(90vh  - 100px)' }}
-          >
+          <Container sx={{ overflowY: 'scroll', height: contentAreaHeight }}>
             <MessagesComponent />
           </Container>
         </Box>
-        <Container>
-          <AgentConfigComponent {...{ handleDrawerOpen }} />
+        <Container sx={{ overflowY: 'scroll', height: contentAreaHeight }}>
+          <AgentConfigComponent />
           <CycleOverviewComponent />
         </Container>
       </Box>
       <BottomNavigationComponent />
       <UploadFileDialog />
-      <AgentConfigDrawer {...{ isDrawerOpen, handleDrawerClose }} />
+      <AgentConfigDrawer />
     </Box>
   )
 }
