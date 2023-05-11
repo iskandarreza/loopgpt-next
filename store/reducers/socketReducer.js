@@ -17,7 +17,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         socketStates: {
-          ...state.socketStates,
           socket: action.payload,
         },
       }
@@ -26,7 +25,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         socketStates: {
-          ...state.socketStates,
           isConnected: true,
         },
       }
@@ -35,7 +33,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         socketStates: {
-          ...state.socketStates,
           isConnected: false,
         },
       }

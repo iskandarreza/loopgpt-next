@@ -27,13 +27,14 @@ export function UploadFileDialog() {
       const data = await response.json()
 
       if (data.success) {
+        console.log(data)
+
         dispatch({ type: RESTORE_AGENT_STATE, payload: data.data })
         dispatch({ type: CLOSE_FILE_UPLOAD_DIALOG })
       } else {
         // handle error
+        console.error(data)
       }
-
-      console.log(data)
     } catch (error) {
       console.log(error)
     }

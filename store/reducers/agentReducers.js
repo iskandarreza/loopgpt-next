@@ -8,12 +8,13 @@ const initialState = {
 }
 
 export default function (state = initialState, action) {
+  console.log({ state, action })
+
   switch (action.type) {
     case SAVE_AGENT_STATE:
       return {
         ...state,
         agentState: {
-          ...state.agentState,
           state_history: [...state.agentState.state_history, action.payload],
         },
       }
@@ -22,7 +23,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         agentState: {
-          ...state.agentState,
           config: action.payload,
         },
       }
