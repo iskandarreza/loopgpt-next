@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Container,
@@ -10,14 +10,25 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  TextField,
   Typography,
 } from '@mui/material'
-import BuildIcon from '@mui/icons-material/Build'
-import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
-import HistoryIcon from '@mui/icons-material/History';
+import CheckIcon from '@mui/icons-material/Check'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import SaveIcon from '@mui/icons-material/Save'
+import ModelTrainingIcon from '@mui/icons-material/ModelTraining'
+import AndroidIcon from '@mui/icons-material/Android'
+import DescriptionIcon from '@mui/icons-material/Description'
+import AddTaskIcon from '@mui/icons-material/AddTask'
+import BlockIcon from '@mui/icons-material/Block'
+import HandymanIcon from '@mui/icons-material/Handyman'
+
+import Forward5Icon from '@mui/icons-material/Forward5'
+import HistoryIcon from '@mui/icons-material/History'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { HIDE_AGENT_CONFIG_DRAWER } from '@/store/types'
+import { Save } from '@mui/icons-material'
 
 const drawerWidth = '25vw'
 
@@ -58,22 +69,13 @@ export function AgentConfigDrawer() {
       </Container>
       <List>
         {[
-          'Model', 
-          'Agent Name', 
-          'Description', 
-          'Goals', 
-          'Constraints', 
-          'Tools'
-        ].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <BuildIcon />
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+          {text: 'Model', icon: <ModelTrainingIcon />},
+          {text: 'Agent Name', icon: <AndroidIcon />},
+          {text: 'Description', icon: <DescriptionIcon />},
+          {text: 'Goals', icon: <AddTaskIcon />},
+          {text: 'Constraints', icon: <BlockIcon />},
+          {text: 'Tools', icon: <HandymanIcon />},
+        ].map((value, index) => (EditableListItem(value)))}
       </List>
       <Divider />
       <Container sx={{padding: '8px'}}>
@@ -83,19 +85,34 @@ export function AgentConfigDrawer() {
       </Container>
       <List>
         {[
-          {text: 'Cycles Per Run', icon: <ModelTrainingIcon />}, 
+          {text: 'Cycles Per Run', icon: <Forward5Icon />}, 
           {text: 'Message History', icon: <HistoryIcon />}
-        ].map(({text, icon}, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {icon}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        ].map((value, index) => (EditableListItem(value)))}
       </List>
     </Drawer>
   )
 }
+function EditableListItem(value) {
+  const {text, icon} = value
+  const [isEditing, setIsEditing] = useState(false)
+  const handleClick = () => {
+    setIsEditing(prevState => !prevState)
+  }
+  return <ListItem key={text} disablePadding>
+    <ListItemButton >
+      <ListItemIcon>
+        {icon}
+      </ListItemIcon>
+      {!isEditing ?
+        <ListItemText onClick={handleClick} primary={text} />
+        : <>
+          <TextField />
+          <IconButton onClick={handleClick}>
+            <SaveIcon />
+          </IconButton>
+        </>
+      }
+    </ListItemButton>
+  </ListItem>;
+}
+

@@ -26,9 +26,22 @@ export function CycleReportComponent(message) {
       </IconListLine>
 
       {!!message.this_cycle.cycle_progress && (
-        <RowPanelContainer panelCount={'1'}>
-          <CycleToolReport data={message.this_cycle} />
-        </RowPanelContainer>
+        <>
+          <RowPanelContainer panelCount={'3'}>
+            <CycleToolReport data={message.this_cycle} />
+          </RowPanelContainer>
+          <RowPanelContainer panelCount={'1'}>
+            <Card>
+              <CardHeader title={'Tool Results'} />
+              <CardContent>
+                <pre style={{ whiteSpace: 'normal' }}>
+                  {JSON.stringify(message.this_cycle.tool_results, null, 4)}
+                </pre>
+              </CardContent>
+            </Card>
+          </RowPanelContainer>
+
+        </>
       )}
       {!!message.this_cycle.next_thoughts && (
         <>
@@ -56,18 +69,18 @@ const CycleToolReport = ({ data }) => {
   return (
     <>
       <Card>
-        <CardHeader title={'Progress'} />
-        <CardContent>
-          <CycleProgress {...{ data }} />
-        </CardContent>
-      </Card>
-      {/* <Card>
         <CardHeader title={'Staging Tool'} />
         <CardContent>
           <pre style={{ whiteSpace: 'normal' }}>{staging_tool}</pre>
         </CardContent>
       </Card>
       <Card>
+        <CardHeader title={'Progress'} />
+        <CardContent>
+          <CycleProgress {...{ data }} />
+        </CardContent>
+      </Card>
+      {/* <Card>
         <CardHeader title={'Command'} />
         <CardContent>
           <pre style={{ whiteSpace: 'normal' }}>
@@ -75,14 +88,6 @@ const CycleToolReport = ({ data }) => {
           </pre>
         </CardContent>
       </Card> */}
-      <Card>
-        <CardHeader title={'Tool Results'} />
-        <CardContent>
-          <pre style={{ whiteSpace: 'normal' }}>
-            {JSON.stringify(tool_results, null, 4)}
-          </pre>
-        </CardContent>
-      </Card>
       <Card>
         <CardHeader title={'Next Command'} />
         <CardContent>

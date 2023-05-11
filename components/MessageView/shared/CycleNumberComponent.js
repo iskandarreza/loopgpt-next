@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Chip } from '@mui/material'
-import ModelTrainingIcon from '@mui/icons-material/ModelTraining'
+import UpdateIcon from '@mui/icons-material/Update'
 
 export const CycleNumberComponent = ({ cycleNumber }) => {
   return (
@@ -8,7 +8,7 @@ export const CycleNumberComponent = ({ cycleNumber }) => {
       <Chip
         sx={{ marginBottom: '8px', marginLeft: '16px' }}
         variant="outlined"
-        icon={<ModelTrainingIcon />}
+        icon={<UpdateIcon />}
         label={`Cycle #${cycleNumber}`}
       />
     </Box>
