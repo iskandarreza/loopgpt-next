@@ -3,9 +3,11 @@ import {
   CLOSE_FILE_UPLOAD_DIALOG,
   APPEND_WEBSOCKET_MESSAGES,
   CLEAR_WEBSOCKET_MESSAGES,
+  SET_FIRST_START,
 } from '../types'
 
 const initialState = {
+  isStarted: false,
   messages: [],
   fileUploadDialog: {
     isOpen: false,
@@ -30,10 +32,11 @@ export default function (state = initialState, action) {
         },
       }
 
-    case APPEND_WEBSOCKET_MESSAGES:
+    
+    case SET_FIRST_START:
       return {
         ...state,
-        messages: [...state.messages, action.payload],
+        isStarted: true,
       }
 
     case CLEAR_WEBSOCKET_MESSAGES:
@@ -41,6 +44,13 @@ export default function (state = initialState, action) {
         ...state,
         messages: [],
       }
+
+    case APPEND_WEBSOCKET_MESSAGES:
+      return {
+        ...state,
+        messages: [...state.messages, action.payload],
+      }
+
 
     default:
       return state

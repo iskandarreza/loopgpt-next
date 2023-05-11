@@ -8,15 +8,25 @@ import {
 } from '@/store/types'
 import { io } from 'socket.io-client'
 
-let socket
+// let socket
 
 export const getSocket = (connection) => {
   const state = store.getState((state) => state.socketStates)
-  if (!state.isConnected) {
-    socket = io(connection)
-    store.dispatch({ type: SET_WEBSOCKET, payload: socket })
+  const { socket, isConnected } = state
+  if (!socket) {
+    const newSocket = io(connection)
+    setupSocketEventListeners(newSocket)
+    store.dispatch({ type: SET_WEBSOCKET, payload: newSocket })
+    return newSocket
+  } else {
+    if (isConnected){
+      console.log(state.socket)
+    } else {
+      socket.removeAllListeners()
+      socket.connect()
+    }
+    return socket
   }
-  return socket
 }
 
 export function setupSocketEventListeners(socket) {
