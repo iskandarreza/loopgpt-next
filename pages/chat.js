@@ -28,7 +28,7 @@ const Chat = () => {
 
   const dispatch = useDispatch()
   const isStarted = useSelector((state) => state.uiStates.isStarted)
-  const agentConfig = useSelector((state) => state.agentStates.config)
+  const agentConfig = useSelector((state) => state.agentState.config)
   const messages = useSelector((state) => state.uiStates.messages)
 
   const handleInputChange = (event) => {

@@ -6,5 +6,5 @@ import socketReducer from './socketReducer'
 export default combineReducers({
   uiStates: uiReducer,
   socketStates: socketReducer,
-  agentStates: agentReducers,
+  agentState: agentReducers,
 })
