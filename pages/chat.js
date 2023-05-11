@@ -57,7 +57,7 @@ const Chat = () => {
   return (
     <Box>
       <Box
-        sx={{ width: '99vw', display: 'grid', gridTemplateColumns: '3fr 1fr', borderBottom: '2px grey solid' }}
+        sx={{ width: '99vw', display: 'grid', gridTemplateColumns: '60vw 3fr', borderBottom: '2px grey solid' }}
       >
         <Container>
           <Typography variant="h4" component="h">
@@ -77,14 +77,14 @@ const Chat = () => {
       </Box>
 
       <Box
-        sx={{ width: '98vw', display: 'grid', gridTemplateColumns: '3fr 1fr' }}
+        sx={{ width: '98vw', display: 'grid', gridTemplateColumns: '60vw 3fr' }}
       >
         <Box>
-          <Container sx={{ overflowY: 'scroll', height: contentAreaHeight }}>
+          <Container sx={{ height: contentAreaHeight }}>
             <MessagesComponent />
           </Container>
         </Box>
-        <Container sx={{ overflowY: 'scroll', height: contentAreaHeight }}>
+        <Container sx={{ overflowY: 'scroll',  height: contentAreaHeight }}>
           <AgentConfigComponent />
           <CycleOverviewComponent />
         </Container>
