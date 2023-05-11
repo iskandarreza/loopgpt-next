@@ -1,17 +1,14 @@
-## React UI for prompt engineering debugging with LoopGPT, an Autonomous AI agent implementation similar to AutoGPT
+## Autonomous AI agent prompt and response tracing
+This tool is designed to trace the responses of automous AI agents, to facilitate improved initial prompting, constraint settings and tooling. Currently, it supports the [LoopGPT](https://loopgpt.readthedocs.io/en/latest/) project.
 
 Note: This is just the frontend client. The backend client is in this repo: https://github.com/iskandarreza/loopgpt-mongodb-express/tree/add-ui
 
-Uses LoopGPT: https://loopgpt.readthedocs.io/en/latest/
-
 Install dependencies:
-
 ```
 yarn
 ```
 
 Start client:
-
 ```
 yarn start
 ```
