@@ -1,26 +1,23 @@
 import React, { useEffect } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { DynamicReactJson } from '@/pages/chat'
 import { RESTORE_AGENT_STATE } from '@/store/types'
 
 export function AgentConfigComponent() {
   const dispatch = useDispatch()
-  const config = useSelector((state) => state.agentState.config)
-  const initState = useSelector((state) => state.agentState.initState)
+  const { initState, config: stateConfig, stateHistory } = useSelector((state) => state.agentState)
   const currentCycleState = useSelector(
     (state) => state.cycleState.agentCycleState
   )
-  const [lastHistoryEntry] = useSelector(
-    (state) => state.agentState.stateHistory
-  ).slice(-1)
+  const [lastHistoryEntry] = stateHistory.slice(-1)
   const lastReportedConfig = lastHistoryEntry ? lastHistoryEntry : false
 
   useEffect(() => {
-    if (!config.goals && !!initState) {
+    if (!stateConfig.goals && !!initState) {
       dispatch({ type: RESTORE_AGENT_STATE, payload: initState })
     }
-  }, [config, initState])
+  }, [stateConfig, initState])
 
   return (
     <Box sx={{ paddingBottom: '1em' }}>
@@ -31,17 +28,17 @@ export function AgentConfigComponent() {
       <Box>
         <DynamicReactJson
           name={'agent_config'}
-          src={config}
+          src={stateConfig}
           theme={'harmonic'}
           collapsed
         />
       </Box>
 
-      <p>Model: {config?.model?.model}</p>
-      <p>Agent Name: {config?.name}</p>
-      <p>Agent Description: {config?.description}</p>
-      <p>Goals: {config?.goals}</p>
-      <p>Constraints: {config?.constraints}</p>
+      <p>Model: {stateConfig?.model?.model}</p>
+      <p>Agent Name: {stateConfig?.name}</p>
+      <p>Agent Description: {stateConfig?.description}</p>
+      <p>Goals: {stateConfig?.goals}</p>
+      <p>Constraints: {stateConfig?.constraints}</p>
       <p>Init Prompt</p>
       <p>Next Prompt</p>
       <p>Tools</p>

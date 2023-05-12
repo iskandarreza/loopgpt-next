@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material'
 import StartIcon from '@mui/icons-material/Start'
 import RestoreIcon from '@mui/icons-material/Restore'
-// import SaveAltIcon from '@mui/icons-material/SaveAlt'
-// import ArchiveIcon from '@mui/icons-material/Archive'
+import SaveAltIcon from '@mui/icons-material/SaveAlt'
+import ArchiveIcon from '@mui/icons-material/Archive'
 import CreateIcon from '@mui/icons-material/Create'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -62,9 +62,6 @@ export function BottomNavigationComponent() {
           if (newValue === 'load') {
             dispatch({ type: OPEN_FILE_UPLOAD_DIALOG })
           }
-          if (newValue === 'save') {
-            dispatch({ type: OPEN_FILE_UPLOAD_DIALOG })
-          }
           if (newValue === 'configure') {
             const isDrawerOpen = state.uiStates.agentConfigDrawer.isOpen
             if (!isDrawerOpen) {
@@ -78,23 +75,49 @@ export function BottomNavigationComponent() {
       >
         <BottomNavigationAction
           value="start"
-          label="Start"
+          label="Start Agent"
           icon={<StartIcon />}
         />
         <BottomNavigationAction
           value="load"
-          label="Restore"
+          label="Restore State"
           icon={<RestoreIcon />}
         />
-        {/* <BottomNavigationAction
+        <BottomNavigationAction
           value="save"
-          label="Save"
+          label="Save Last State"
           icon={<SaveAltIcon />}
-        /> */}
-        {/* <BottomNavigationAction value="archive" label="Archive" icon={<ArchiveIcon />} /> */}
+          onClick={() => {
+            const config = state.agentState.config
+            const [lastHistoryEntry] = state.agentState.stateHistory.slice(-1)
+            const lastReportedConfig = lastHistoryEntry ? lastHistoryEntry : config
+            const jsonConfig = new Blob([JSON.stringify(lastReportedConfig)], {
+              type: 'application/json'
+            })
+            const a = document.createElement('a')
+            a.href = URL.createObjectURL(jsonConfig)
+            a.download = `${state.agentState.config.name}-config`
+            a.click()          
+          }}
+        />
+        <BottomNavigationAction
+          value="archive"
+          label="Archive Messages"
+          icon={<ArchiveIcon />} 
+          onClick={() => {
+            const messages = state.uiStates.messages
+            const jsonConfig = new Blob([JSON.stringify(messages)], {
+              type: 'application/json'
+            })
+            const a = document.createElement('a')
+            a.href = URL.createObjectURL(jsonConfig)
+            a.download = `${state.agentState.config.name}-messages`
+            a.click()
+          }}
+        />
         <BottomNavigationAction
           value="configure"
-          label="Configure"
+          label="Configure Agent"
           icon={<CreateIcon />}
         />
       </BottomNavigation>

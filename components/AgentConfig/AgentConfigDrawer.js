@@ -164,6 +164,7 @@ function EditableListItem(value) {
           sx={{ width: '100%' }}
           placeholder={text}
           defaultValue={inputValue}
+          onFocus={handleEditStart}
           onBlur={handleInputChange}
           id={id}
         />

@@ -2,6 +2,7 @@ import {
   SET_AGENT_INIT_STATE,
   RESTORE_AGENT_STATE,
   SAVE_AGENT_STATE,
+  SET_CONFIG_ITEM,
 } from '../types'
 
 const initialState = {
@@ -27,6 +28,23 @@ export default function (state = initialState, action) {
       return {
         ...state,
         config: action.payload,
+      }
+
+    case SET_CONFIG_ITEM:
+      let { key, value } = action.payload
+      let newState = { ...state }
+
+      if (typeof value !== 'undefined') {
+        if (value !== '') {
+          newState['config'] = {
+            ...newState['config'],
+            [key]: value,
+          }
+        }
+      }
+
+      return {
+        ...newState,
       }
 
     default:

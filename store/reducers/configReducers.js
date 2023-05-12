@@ -2,7 +2,9 @@ import { SET_CONFIG_ITEM } from '../types'
 
 const initialState = {
   config: {},
-  settings: {},
+  settings: {
+    maxcycles: 5
+  },
 }
 
 export default function (state = initialState, action) {
