@@ -8,22 +8,22 @@ import { io } from 'socket.io-client'
 import { handleMessage } from './handleMessage'
 
 export const getSocket = (connection) => {
-  const state = store.getState((state) => state.socketStates)
-  const { socket, isConnected } = state
-  if (!socket) {
-    const newSocket = io(connection)
-    setupSocketEventListeners(newSocket)
-    store.dispatch({ type: SET_WEBSOCKET, payload: newSocket })
-    return newSocket
-  } else {
-    if (isConnected) {
-      console.log(state.socket)
-    } else {
-      socket.removeAllListeners()
-      socket.connect()
-    }
-    return socket
-  }
+  // const state = store.getState((state) => state.socketStates)
+  // const { socket, isConnected } = state
+  // if (!socket) {
+  //   const newSocket = io(connection)
+  //   setupSocketEventListeners(newSocket)
+  //   store.dispatch({ type: SET_WEBSOCKET, payload: newSocket })
+  //   return newSocket
+  // } else {
+  //   if (isConnected) {
+  //     console.log(state.socket)
+  //   } else {
+  //     socket.removeAllListeners()
+  //     socket.connect()
+  //   }
+  //   return socket
+  // }
 }
 
 export function setupSocketEventListeners(socket) {

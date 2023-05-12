@@ -62,7 +62,10 @@ export function UploadFileDialog() {
         </DialogContentText>
 
         <Input type="file" onChange={handleFileChange} />
-        <Button variant="contained" onClick={handleFileUpload}>
+        <Button
+          variant="contained"
+          // onClick={handleFileUpload}
+        >
           Upload
         </Button>
       </DialogContent>
