@@ -1,5 +1,6 @@
 import { store } from '@/store/store'
 import {
+  APPEND_WEBSOCKET_MESSAGES,
   SET_WEBSOCKET,
   SET_WEBSOCKET_CONNECTED,
   SET_WEBSOCKET_DISCONNECTED,
@@ -51,21 +52,22 @@ function handleStartLoop(socket) {
 
   const { name, goals } = config
 
+  const startOptions = {
+    max_cycles: parseInt(maxcycles),
+    config: JSON.stringify(config),
+  }
+
   if (!name || !goals) {
     alert('Please configure the agent or upload a config file!')
   } else {
-    socket.emit('start', {
-      max_cycles: parseInt(maxcycles),
-      config: JSON.stringify(config),
-    })
+    socket.emit('start', startOptions)
+
+    // store.dispatch({type: APPEND_WEBSOCKET_MESSAGES, payload: {init_state: {config, startOptions}}})
   }
   console.log({
     agentState,
     configState,
-    startOptions: {
-      max_cycles: parseInt(maxcycles),
-      config: JSON.stringify(config),
-    },
+    startOptions,
   })
 }
 
@@ -82,6 +84,14 @@ function handleIncomingMessages(socket) {
   ]
 
   props.forEach((prop) => {
-    socket.on(prop, (message) => handleMessage(message))
+    const exclusions = ['init_state', 'message']
+    let label = prop.toString()
+    if (!exclusions.includes(prop)) {
+      label = prop.toString().slice(0, -7)
+    }
+
+    socket.on(prop, (message) => {
+      handleMessage(message, label)
+    })
   })
 }

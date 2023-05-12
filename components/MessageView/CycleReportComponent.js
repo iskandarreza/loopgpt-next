@@ -48,11 +48,12 @@ export function CycleReportComponent(message) {
         </IconListLine>
       </Box>
 
-      <RowPanelContainer panelCount={'5'}>
+      <RowPanelContainer>
         <ThoughtsMessage thoughts={thoughts} />
       </RowPanelContainer>
-      <RowPanelContainer panelCount={'2'}>
-        <Card>
+
+      <RowPanelContainer>
+        <Card sx={{ flex: '1 1' }}>
           <CardHeader title={'Tool Results'} />
           <CardContent>
             <pre style={{ whiteSpace: 'normal' }}>
@@ -60,8 +61,7 @@ export function CycleReportComponent(message) {
             </pre>
           </CardContent>
         </Card>
-
-        <Card>
+        <Card sx={{ flex: '1 1' }}>
           <CardHeader title={'Staging Tool'} />
           <CardContent>
             <pre style={{ whiteSpace: 'normal' }}>
@@ -70,15 +70,6 @@ export function CycleReportComponent(message) {
           </CardContent>
         </Card>
       </RowPanelContainer>
-
-      {/* {!!message.this_cycle.next_thoughts && (
-        <>
-          <IconListLine icon={<NextPlanIcon />}>Next thoughts: </IconListLine>
-          <RowPanelContainer panelCount={'5'}>
-            <ThoughtsMessage thoughts={message.this_cycle.next_thoughts} />
-          </RowPanelContainer>
-        </>
-      )} */}
     </CycleStageContainer>
   )
 }

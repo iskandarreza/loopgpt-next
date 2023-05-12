@@ -1,4 +1,4 @@
-import { ThemeProvider, createTheme } from '@mui/material'
+import { ThemeProvider, Typography, createTheme } from '@mui/material'
 import { Container } from '@mui/system'
 
 const theme = createTheme({
@@ -14,21 +14,12 @@ const theme = createTheme({
   },
 })
 
-export default function HomePage({ records }) {
+export default function HomePage() {
   return (
     <ThemeProvider theme={theme}>
-      <Container></Container>
+      <Container>
+        <Typography variant="h1">Landing Page</Typography>
+      </Container>
     </ThemeProvider>
   )
 }
-
-// export async function getStaticProps() {
-//   const res = await fetch('http://localhost:5050/records/calibration-data')
-//   const records = await res.json()
-
-//   return {
-//     props: {
-//       records,
-//     },
-//   }
-// }

@@ -90,24 +90,26 @@ export function BottomNavigationComponent() {
           onClick={() => {
             const config = state.agentState.config
             const [lastHistoryEntry] = state.agentState.stateHistory.slice(-1)
-            const lastReportedConfig = lastHistoryEntry ? lastHistoryEntry : config
+            const lastReportedConfig = lastHistoryEntry
+              ? lastHistoryEntry
+              : config
             const jsonConfig = new Blob([JSON.stringify(lastReportedConfig)], {
-              type: 'application/json'
+              type: 'application/json',
             })
             const a = document.createElement('a')
             a.href = URL.createObjectURL(jsonConfig)
             a.download = `${state.agentState.config.name}-config`
-            a.click()          
+            a.click()
           }}
         />
         <BottomNavigationAction
           value="archive"
           label="Archive Messages"
-          icon={<ArchiveIcon />} 
+          icon={<ArchiveIcon />}
           onClick={() => {
             const messages = state.uiStates.messages
             const jsonConfig = new Blob([JSON.stringify(messages)], {
-              type: 'application/json'
+              type: 'application/json',
             })
             const a = document.createElement('a')
             a.href = URL.createObjectURL(jsonConfig)

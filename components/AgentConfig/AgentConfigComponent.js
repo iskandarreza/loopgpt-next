@@ -6,7 +6,11 @@ import { RESTORE_AGENT_STATE } from '@/store/types'
 
 export function AgentConfigComponent() {
   const dispatch = useDispatch()
-  const { initState, config: stateConfig, stateHistory } = useSelector((state) => state.agentState)
+  const {
+    initState,
+    config: stateConfig,
+    stateHistory,
+  } = useSelector((state) => state.agentState)
   const currentCycleState = useSelector(
     (state) => state.cycleState.agentCycleState
   )
@@ -17,7 +21,7 @@ export function AgentConfigComponent() {
     if (!stateConfig.goals && !!initState) {
       dispatch({ type: RESTORE_AGENT_STATE, payload: initState })
     }
-  }, [stateConfig, initState])
+  }, [stateConfig, initState, dispatch])
 
   return (
     <Box sx={{ paddingBottom: '1em' }}>

@@ -3,7 +3,7 @@ import { SET_CONFIG_ITEM } from '../types'
 const initialState = {
   config: {},
   settings: {
-    maxcycles: 5
+    maxcycles: 1,
   },
 }
 

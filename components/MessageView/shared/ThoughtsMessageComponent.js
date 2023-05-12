@@ -8,7 +8,7 @@ export const ThoughtsMessage = ({ thoughts }) => {
   delete thoughtForms.cycle
 
   return Object.keys(thoughtForms).map((key, index) => (
-    <Card key={`${id}-${key}-${index}`}>
+    <Card sx={{ flex: '1' }} key={`${id}-${key}-${index}`}>
       <CardHeader title={key.toUpperCase()} />
       <CardContent>
         <pre style={{ whiteSpace: 'normal' }}>{thoughtForms[key]}</pre>

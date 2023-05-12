@@ -8,53 +8,73 @@ import {
 } from '@/store/types'
 import { parseHistory } from './parseHistory'
 
-export function handleMessage(message) {
-  const prop = Object.keys(message)
+export function handleMessage(message, label) {
+  if (!message) return
   const exclusions = ['init_state', 'message']
-  const parsed = parseHistory(message)
+  console.log({ label, message })
 
-  if (!!parsed && !exclusions.includes(`${prop}`)) {
-    const label = prop.toString().slice(0, -7)
-    const {
-      cycle,
-      plan,
-      state,
-      staging_response,
-      staging_tool,
-      tool_response,
-    } = message[prop]
-    const parsedHistory = parsed.length > 2 ? parsed.slice(-3) : [...parsed]
-    const agentResponse = parsedHistory
-      .filter((v) => v.role === 'assistant')
-      .pop().content
-    const payload = {
-      [label]: {
-        agentResponse,
-        parsedHistory,
+  if (!exclusions.includes(label)) {
+    const agentStateData = message
+    const parsed = parseHistory(agentStateData)
+
+    console.log({ agentStateData })
+
+    if (!!parsed) {
+      const {
         cycle,
+        plan,
         state,
         staging_response,
         staging_tool,
         tool_response,
-        plan,
-      },
+      } = agentStateData
+
+      const parsedHistory = parsed.length > 2 ? parsed.slice(-3) : [...parsed]
+      const agentResponse = parsedHistory
+        .filter((v) => v.role === 'assistant')
+        .pop().content
+
+      const payload = {
+        [label]: {
+          agentResponse,
+          parsedHistory,
+          cycle,
+          state,
+          staging_response,
+          staging_tool,
+          tool_response,
+          plan,
+        },
+      }
+
+      console.log({ type: APPEND_WEBSOCKET_MESSAGES, payload })
+
+      store.dispatch({ type: APPEND_WEBSOCKET_MESSAGES, payload })
+
+      if (label === 'run_tool') {
+        store.dispatch({ type: SAVE_AGENT_STATE, payload: agentStateData })
+        store.dispatch({
+          type: UPDATE_AGENT_CYCLE_STATE,
+          payload: agentStateData,
+        })
+        store.dispatch({ type: UPDATE_CYCLE_COUNT })
+      }
+
+      if (label === 'init_resp') {
+        store.dispatch({ type: SET_AGENT_INIT_STATE, payload: agentStateData })
+        store.dispatch({ type: UPDATE_CYCLE_COUNT })
+      }
     }
-
-    console.log(payload)
-
-    store.dispatch({ type: APPEND_WEBSOCKET_MESSAGES, payload })
-
-    if (label === 'run_tool') {
-      store.dispatch({ type: SAVE_AGENT_STATE, payload: message[prop] })
-      store.dispatch({ type: UPDATE_AGENT_CYCLE_STATE, payload: message[prop] })
-      store.dispatch({ type: UPDATE_CYCLE_COUNT })
-    }
-
-    if (label === 'init_resp') {
-      store.dispatch({ type: SET_AGENT_INIT_STATE, payload: message[prop] })
-      store.dispatch({ type: UPDATE_CYCLE_COUNT })
-    }
+    // else {
+    //   store.dispatch({
+    //     type: APPEND_WEBSOCKET_MESSAGES,
+    //     payload: { label: message },
+    //   })
+    // }
   } else {
-    store.dispatch({ type: APPEND_WEBSOCKET_MESSAGES, payload: { ...message } })
+    store.dispatch({
+      type: APPEND_WEBSOCKET_MESSAGES,
+      payload: { [label]: message },
+    })
   }
 }

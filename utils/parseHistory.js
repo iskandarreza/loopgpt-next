@@ -1,11 +1,8 @@
-export function parseHistory(message) {
-  const prop = Object.keys(message)
-  const data = message[prop]
-  const { history, type } = data
+export function parseHistory(agentStateData) {
   let formattedEntries = []
 
-  if (type === 'agent') {
-    history.map((entry) => {
+  if (agentStateData?.type === 'agent') {
+    agentStateData.history?.map((entry) => {
       let formattedEntry
       try {
         let parsedContent = JSON.parse(entry.content)
