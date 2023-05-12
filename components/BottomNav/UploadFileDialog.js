@@ -27,8 +27,6 @@ export function UploadFileDialog() {
       const data = await response.json()
 
       if (data.success) {
-        console.log(data)
-
         dispatch({ type: RESTORE_AGENT_STATE, payload: data.data })
         dispatch({ type: CLOSE_FILE_UPLOAD_DIALOG })
       } else {
@@ -64,7 +62,10 @@ export function UploadFileDialog() {
         </DialogContentText>
 
         <Input type="file" onChange={handleFileChange} />
-        <Button variant="contained" onClick={handleFileUpload}>
+        <Button
+          variant="contained"
+          // onClick={handleFileUpload}
+        >
           Upload
         </Button>
       </DialogContent>

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from '@mui/material'
 
-export function RowPanelContainer({children, panelCount}) {
+export function RowPanelContainer({ children, panelCount }) {
   const [value, setValue] = useState(5)
   useEffect(() => {
-    console.log(panelCount)
     if (panelCount) {
       setValue(panelCount)
     }
-  }, [])
+  }, [panelCount])
   return (
     <Container
       sx={{
