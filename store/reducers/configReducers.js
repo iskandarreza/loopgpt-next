@@ -8,10 +8,20 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case SET_CONFIG_ITEM:
-      const { configType, key, value } = action.payload
+      let { configType, key, value } = action.payload
+      let newState = { ...state }
+
+      if (typeof value !== 'undefined') {
+        if (value !== '') {
+          newState[configType] = {
+            ...newState[configType],
+            [key]: value,
+          }
+        }
+      }
+
       return {
-        ...state,
-        [configType]: { [key]: value },
+        ...newState,
       }
 
     default:

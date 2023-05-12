@@ -27,19 +27,6 @@ export function UploadFileDialog() {
       const data = await response.json()
 
       if (data.success) {
-        const { history } = data.data
-
-        // for (const entry in history) {
-        //   // console.log(`${entry[0]}: ${entry[1]}`)
-        //   // let { role, content } = entry
-        //   // console.log(Object.keys(entry))
-        //   for (const item in entry) {
-        //     console.log(item)
-        //   }
-        // }
-
-        history.map(({ role, content }) => console.log(`${role}: ${content}`))
-
         dispatch({ type: RESTORE_AGENT_STATE, payload: data.data })
         dispatch({ type: CLOSE_FILE_UPLOAD_DIALOG })
       } else {

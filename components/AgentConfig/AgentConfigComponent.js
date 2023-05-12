@@ -14,9 +14,7 @@ export function AgentConfigComponent() {
   const [lastHistoryEntry] = useSelector(
     (state) => state.agentState.stateHistory
   ).slice(-1)
-  const lastReportedConfig = lastHistoryEntry
-    ? lastHistoryEntry.agent_state
-    : false
+  const lastReportedConfig = lastHistoryEntry ? lastHistoryEntry : false
 
   useEffect(() => {
     if (!config.goals && !!initState) {

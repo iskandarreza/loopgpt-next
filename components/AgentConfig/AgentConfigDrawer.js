@@ -23,7 +23,6 @@ import BlockIcon from '@mui/icons-material/Block'
 import HandymanIcon from '@mui/icons-material/Handyman'
 
 import Forward5Icon from '@mui/icons-material/Forward5'
-import HistoryIcon from '@mui/icons-material/History'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { HIDE_AGENT_CONFIG_DRAWER, SET_CONFIG_ITEM } from '@/store/types'
@@ -97,11 +96,6 @@ export function AgentConfigDrawer() {
             icon: <Forward5Icon />,
             id: 'settings-maxcycles',
           },
-          {
-            text: 'Message History',
-            icon: <HistoryIcon />,
-            id: 'settings-history',
-          },
         ].map((value, index) => EditableListItem(value))}
       </List>
     </Drawer>
@@ -110,6 +104,7 @@ export function AgentConfigDrawer() {
 function EditableListItem(value) {
   const state = useSelector((state) => state.configState)
   const agentConfig = useSelector((state) => state.agentState.config)
+  const exclusions = ['model', 'tools', 'history']
   const dispatch = useDispatch()
   const { text, icon, id } = value
 
@@ -117,21 +112,25 @@ function EditableListItem(value) {
   const configType = idStrArr[0]
   const key = idStrArr.slice(1)[0]
   const fieldValue =
-    !['model', 'tools'].includes(key) &&
-    (state[configType]?.[key] || agentConfig[key])
+    !exclusions.includes(key) && (state[configType]?.[key] || agentConfig[key])
 
   const [isEditing, setIsEditing] = useState(false)
   const [inputValue, setInputValue] = useState('')
+
+  const setConfigItem = (value) => {
+    dispatch({
+      type: SET_CONFIG_ITEM,
+      payload: { configType, key, value },
+    })
+  }
+
   const handleEditStart = () => {
     setIsEditing(true)
   }
 
   const handleEditStop = () => {
     if (inputValue) {
-      dispatch({
-        type: SET_CONFIG_ITEM,
-        payload: { configType, key, value: inputValue },
-      })
+      setConfigItem(inputValue)
     }
     setIsEditing((prevState) => !prevState)
   }
@@ -143,12 +142,11 @@ function EditableListItem(value) {
   }
 
   useEffect(() => {
-    if (agentConfig[key]) {
-      if (!['model', 'tools'].includes(key)) {
-        setInputValue(fieldValue)
-      }
+    if (!exclusions.includes(key)) {
+      setInputValue(fieldValue)
+      setConfigItem(fieldValue)
     }
-  }, [agentConfig, key, fieldValue])
+  }, [key, fieldValue])
 
   return (
     <ListItem key={text} disablePadding>
