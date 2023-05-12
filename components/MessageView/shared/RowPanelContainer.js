@@ -7,7 +7,7 @@ export function RowPanelContainer({ children, panelCount }) {
     if (panelCount) {
       setValue(panelCount)
     }
-  }, [])
+  }, [panelCount])
   return (
     <Container
       sx={{

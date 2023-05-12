@@ -17,7 +17,7 @@ export function AgentConfigComponent() {
     if (!stateConfig.goals && !!initState) {
       dispatch({ type: RESTORE_AGENT_STATE, payload: initState })
     }
-  }, [stateConfig, initState])
+  }, [stateConfig, initState, dispatch])
 
   return (
     <Box sx={{ paddingBottom: '1em' }}>
